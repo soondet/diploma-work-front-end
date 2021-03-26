@@ -7,6 +7,7 @@ import UserService from "../services/user.service";
 import ScheduleService from "../services/schedule.service";
 import StationService from "../services/station.service";
 
+import Index from "./index";
 const { RangePicker } = DatePicker;
 // const { Option } = Select;
 
@@ -116,11 +117,12 @@ export default class Home extends Component {
       <div className="container">
         <header className="jumbotron">
           <h3>{this.state.content}</h3>
+
           <Col>
             <Select
               showSearch
               style={{ width: 200 }}
-              placeholder="Select a person"
+              placeholder="Select From"
               optionFilterProp="children"
               onChange={this.onChangeCityFrom}
               filterOption={(input, option) =>
@@ -136,7 +138,7 @@ export default class Home extends Component {
             <Select
               showSearch
               style={{ width: 200 }}
-              placeholder="Select a person"
+              placeholder="Select To"
               optionFilterProp="children"
               onChange={this.onChangeCityTo}
               filterOption={(input, option) =>
@@ -159,7 +161,7 @@ export default class Home extends Component {
               renderExtraFooter={() => <h5>Please press OK after choosing</h5>}
             />
             <Button type="primary" onClick={this.onSearchSchedule}>
-              Click me!
+              Search
             </Button>
           </Col>
           <Col>
@@ -195,6 +197,8 @@ export default class Home extends Component {
               )}
             />
           </Col>
+
+          <Index />
         </header>
       </div>
     );
