@@ -5,12 +5,10 @@ const API_URL = "http://195.2.67.225:8080/api/schedule/";
 
 class ScheduleService {
   getSchedule(filters) {
-
-    return axios.post(API_URL + "get", {
-      cityFrom: filters.cityFrom,
-      cityTo: filters.cityTo,
-      date: filters.date,
-    });
+    return axios.get(
+      API_URL +
+        `address?addressFromId=${filters.addressFrom}&addressToId=${filters.addressTo}`
+    );
   }
 }
 

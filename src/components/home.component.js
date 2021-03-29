@@ -1,11 +1,22 @@
 import React, { Component } from "react";
-import { DatePicker, Select, Button, List, Col, message } from "antd";
+import {
+  DatePicker,
+  Select,
+  Button,
+  List,
+  Col,
+  message,
+  Row,
+  Card,
+} from "antd";
 import "antd/dist/antd.css";
 import moment from "moment";
 
 import UserService from "../services/user.service";
 import ScheduleService from "../services/schedule.service";
 import StationService from "../services/station.service";
+import CityService from "../services/city.service";
+import AddressService from "../services/address.service";
 
 import Index from "./index";
 const { RangePicker } = DatePicker;
@@ -19,6 +30,9 @@ export default class Home extends Component {
     this.state = {
       content: "",
       stationCities: [],
+      cities: [],
+      addressesFrom: [],
+      addressesTo: [],
       filters: {},
       date: "",
       cityFrom: "",
@@ -27,7 +41,9 @@ export default class Home extends Component {
     };
     this.onOkDatePicker = this.onOkDatePicker.bind(this);
     this.onChangeCityFrom = this.onChangeCityFrom.bind(this);
+    this.onChangeAddressFrom = this.onChangeAddressFrom.bind(this);
     this.onChangeCityTo = this.onChangeCityTo.bind(this);
+    this.onChangeAddressTo = this.onChangeAddressTo.bind(this);
     this.onSearchSchedule = this.onSearchSchedule.bind(this);
     this.onChangeDatePicker = this.onChangeDatePicker.bind(this);
   }
@@ -49,10 +65,10 @@ export default class Home extends Component {
       }
     );
 
-    StationService.getStationCities().then(
+    CityService.getCities().then(
       (response) => {
         this.setState({
-          stationCities: response.data,
+          cities: response.data,
         });
       },
       (error) => {
@@ -81,27 +97,67 @@ export default class Home extends Component {
     this.setState({
       filters: {
         ...this.state.filters,
-        date: value,
+        date: dateString,
       },
     });
   }
 
   onChangeCityFrom(value) {
+    let cityId = this.state.cities.filter((e) => e.cityName == value)[0].id;
+    AddressService.getAddressByCity(cityId).then((response) => {
+      this.setState({
+        addressesFrom: response.data.map((e) => ({
+          id: e.id,
+          addressName: e.addressName,
+        })),
+      });
+    });
     this.setState({
       filters: { ...this.state.filters, cityFrom: value },
     });
   }
+  onChangeAddressFrom(value) {
+    this.setState({
+      filters: {
+        ...this.state.filters,
+        addressFrom: this.state.addressesFrom.filter(
+          (e) => e.addressName == value
+        )[0].id,
+      },
+    });
+  }
 
   onChangeCityTo(value) {
+    let cityId = this.state.cities.filter((e) => e.cityName == value)[0].id;
+    AddressService.getAddressByCity(cityId).then((response) => {
+      this.setState({
+        addressesTo: response.data.map((e) => ({
+          id: e.id,
+          addressName: e.addressName,
+        })),
+      });
+    });
     this.setState({
       filters: { ...this.state.filters, cityTo: value },
+    });
+  }
+  onChangeAddressTo(value) {
+    this.setState({
+      filters: {
+        ...this.state.filters,
+        addressTo: this.state.addressesTo.filter(
+          (e) => e.addressName == value
+        )[0].id,
+      },
     });
   }
 
   onSearchSchedule() {
     const { filters } = this.state;
+    console.log(filters);
     ScheduleService.getSchedule(filters).then(
       (response) => {
+        console.log(response);
         this.setState({
           scheduleItems: response.data,
         });
@@ -113,57 +169,115 @@ export default class Home extends Component {
   }
 
   render() {
+    this.state.cities.map((e, index) => console.log(e.cityName + " " + index));
+    console.log(this.state.addressesFrom);
+    console.log(this.state.addressesTo);
+    console.log(this.state.filters);
+    console.log(this.state.scheduleItems);
     return (
       <div className="container">
         <header className="jumbotron">
           <h3>{this.state.content}</h3>
 
-          <Col>
-            <Select
-              showSearch
-              style={{ width: 200 }}
-              placeholder="Select From"
-              optionFilterProp="children"
-              onChange={this.onChangeCityFrom}
-              filterOption={(input, option) =>
-                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-              }
-            >
-              {this.state.stationCities.map((e, index) => (
-                <Select.Option key={index} value={e}>
-                  {e}
-                </Select.Option>
-              ))}
-            </Select>
-            <Select
-              showSearch
-              style={{ width: 200 }}
-              placeholder="Select To"
-              optionFilterProp="children"
-              onChange={this.onChangeCityTo}
-              filterOption={(input, option) =>
-                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-              }
-            >
-              {this.state.stationCities.map((e, index) => (
-                <Select.Option key={index} value={e}>
-                  {e}
-                </Select.Option>
-              ))}
-            </Select>
+          <Row>
+            <Col>
+              <Row>
+                <Select
+                  showSearch
+                  style={{ width: 200 }}
+                  placeholder="Select From City"
+                  optionFilterProp="children"
+                  onChange={this.onChangeCityFrom}
+                  filterOption={(input, option) =>
+                    option.children
+                      .toLowerCase()
+                      .indexOf(input.toLowerCase()) >= 0
+                  }
+                >
+                  {this.state.cities.map((e, index) => (
+                    <Select.Option key={e.id} value={e.cityName}>
+                      {e.cityName}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Row>
+              <Row>
+                <Select
+                  showSearch
+                  style={{ width: 200 }}
+                  placeholder="Select From Address"
+                  optionFilterProp="children"
+                  onChange={this.onChangeAddressFrom}
+                  filterOption={(input, option) =>
+                    option.children
+                      .toLowerCase()
+                      .indexOf(input.toLowerCase()) >= 0
+                  }
+                >
+                  {this.state.addressesFrom.map((e, index) => (
+                    <Select.Option key={e.id} value={e.addressName}>
+                      {e.addressName}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Row>
+            </Col>
+            <Col>
+              <Row>
+                <Select
+                  showSearch
+                  style={{ width: 200 }}
+                  placeholder="Select To City"
+                  optionFilterProp="children"
+                  onChange={this.onChangeCityTo}
+                  filterOption={(input, option) =>
+                    option.children
+                      .toLowerCase()
+                      .indexOf(input.toLowerCase()) >= 0
+                  }
+                >
+                  {this.state.cities.map((e, index) => (
+                    <Select.Option key={e.id} value={e.cityName}>
+                      {e.cityName}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Row>
+              <Row>
+                <Select
+                  showSearch
+                  style={{ width: 200 }}
+                  placeholder="Select To Address"
+                  optionFilterProp="children"
+                  onChange={this.onChangeAddressTo}
+                  filterOption={(input, option) =>
+                    option.children
+                      .toLowerCase()
+                      .indexOf(input.toLowerCase()) >= 0
+                  }
+                >
+                  {this.state.addressesTo.map((e, index) => (
+                    <Select.Option key={e.id} value={e.addressName}>
+                      {e.addressName}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Row>
+            </Col>
 
-            <DatePicker
+            <DatePicker onChange={this.onChangeDatePicker} />
+            {/* <DatePicker
               onChange={this.onChangeDatePicker}
               showTime
               // onChange={this.onChange}
               format="YYYY-MM-DDTHH:mm"
               onOk={this.onOkDatePicker}
               renderExtraFooter={() => <h5>Please press OK after choosing</h5>}
-            />
+            /> */}
             <Button type="primary" onClick={this.onSearchSchedule}>
               Search
             </Button>
-          </Col>
+          </Row>
           <Col>
             <List
               pagination={{
@@ -177,22 +291,27 @@ export default class Home extends Component {
               dataSource={this.state.scheduleItems}
               renderItem={(item) => (
                 <List.Item>
-                  {item.id}+,
-                  {item.city}+,
-                  {item.stationName}+,
-                  {item.stateNumber}+,
-                  {item.busModel}+,
-                  {item.seatNumber}+,
-                  {item.seatPriceStandard}+,
-                  {item.seatPriceSleep}+,
-                  {item.seatPriceLying}+,
-                  {item.cityId}+,
-                  {item.cityFrom}+,
-                  {item.cityTo}+,
-                  {item.date}+,
-                  {item.seatCountStandard}+,
-                  {item.seatCountSleep}+,
-                  {item.seatCountLying}
+                  <Card style={{ width: 300 }}>
+                    <p>{item.scheduleStatus}</p>
+                    <p>{item.scheduleDate}</p>
+                    <p>{item.price}</p>
+                    <p>{item.routeDistance}</p>
+                    <p>{item.busStateNumber}</p>
+                    <p>{item.busAvailability}</p>
+                    <p>{item.busAvailableSeatNumber}</p>
+                    <p>{item.busModelName}</p>
+                    <p>{item.busModelSeatNumber}</p>
+                    <p>
+                      {item.addresses.map((element) => {
+                        return (
+                          <div>
+                            {element.addressName}, {element.sequenceNumber}
+                          </div>
+                        );
+                      })}
+                    </p>
+                  </Card>
+                  ,
                 </List.Item>
               )}
             />
