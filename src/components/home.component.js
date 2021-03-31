@@ -310,8 +310,8 @@ export default class Home extends Component {
                         );
                       })}
                     </p>
+                    <Button type="primary" onClick={() => this.onClickCardButton(item)}>Buy</Button>
                   </Card>
-                  ,
                 </List.Item>
               )}
             />

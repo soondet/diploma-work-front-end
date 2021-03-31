@@ -7,7 +7,7 @@ class ScheduleService {
   getSchedule(filters) {
     return axios.get(
       API_URL +
-        `address?addressFromId=${filters.addressFrom}&addressToId=${filters.addressTo}`
+        `address?addressFromId=${filters.addressFrom}&addressToId=${filters.addressTo}&date=${filters.date}`
     );
   }
 }
