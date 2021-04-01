@@ -8,9 +8,12 @@ import {
   message,
   Row,
   Card,
+  Steps,
+  Divider,
 } from "antd";
 import "antd/dist/antd.css";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 import UserService from "../services/user.service";
 import ScheduleService from "../services/schedule.service";
@@ -20,10 +23,7 @@ import AddressService from "../services/address.service";
 
 import Index from "./index";
 const { RangePicker } = DatePicker;
-// const { Option } = Select;
 
-//moment().format("YYYY-MM-DD[T]HH:mm:ss"),
-//  moment().startOf("month").utc(6).startOf("day"),
 export default class Home extends Component {
   constructor(props) {
     super(props);
@@ -46,6 +46,7 @@ export default class Home extends Component {
     this.onChangeAddressTo = this.onChangeAddressTo.bind(this);
     this.onSearchSchedule = this.onSearchSchedule.bind(this);
     this.onChangeDatePicker = this.onChangeDatePicker.bind(this);
+    this.showSteps = this.showSteps.bind(this);
   }
 
   componentDidMount() {
@@ -82,8 +83,52 @@ export default class Home extends Component {
     );
   }
 
+  showSteps(item) {
+    const { addressesFrom, addressesTo, filters } = this.state;
+
+    let sequenceFrom = item.addresses.filter(
+      (e) => e.addressId === filters.addressFrom
+    )[0];
+    let sequenceTo = item.addresses.filter(
+      (e) => e.addressId == filters.addressTo
+    )[0];
+
+    let rangeSequence;
+    if (sequenceFrom !== undefined && sequenceTo !== undefined) {
+      sequenceFrom = sequenceFrom.sequenceNumber;
+      sequenceTo = sequenceTo.sequenceNumber;
+      rangeSequence = Array(sequenceTo - sequenceFrom + 1)
+        .fill()
+        .map((_, idx) => sequenceFrom + idx);
+    }
+
+    return sequenceFrom !== undefined && sequenceTo !== undefined ? (
+      <Steps progressDot current={sequenceTo - 1} style={{ width: "100%" }}>
+        {item.addresses.map((element) => {
+          if (rangeSequence.includes(element.sequenceNumber)) {
+            return (
+              <Steps.Step
+                style={{ width: 200, height: 200 }}
+                title={element.addressName}
+                description={element.cityName}
+              />
+            );
+          } else {
+            return (
+              <Steps.Step
+                status={"wait"}
+                style={{ width: 200, height: 200 }}
+                title={element.addressName}
+                description={element.cityName}
+              />
+            );
+          }
+        })}
+      </Steps>
+    ) : null;
+  }
+
   onOkDatePicker(value) {
-    console.log(value);
     this.setState({
       filters: {
         ...this.state.filters,
@@ -154,10 +199,20 @@ export default class Home extends Component {
 
   onSearchSchedule() {
     const { filters } = this.state;
-    console.log(filters);
     ScheduleService.getSchedule(filters).then(
       (response) => {
-        console.log(response);
+        response.data.forEach((element) => {
+          element.addresses.sort(function (a, b) {
+            if (a.sequenceNumber > b.sequenceNumber) {
+              return 1;
+            }
+            if (a.sequenceNumber < b.sequenceNumber) {
+              return -1;
+            }
+            return 0;
+          });
+        });
+
         this.setState({
           scheduleItems: response.data,
         });
@@ -170,10 +225,6 @@ export default class Home extends Component {
 
   render() {
     this.state.cities.map((e, index) => console.log(e.cityName + " " + index));
-    console.log(this.state.addressesFrom);
-    console.log(this.state.addressesTo);
-    console.log(this.state.filters);
-    console.log(this.state.scheduleItems);
     return (
       <div className="container">
         <header className="jumbotron">
@@ -264,16 +315,7 @@ export default class Home extends Component {
                 </Select>
               </Row>
             </Col>
-
             <DatePicker onChange={this.onChangeDatePicker} />
-            {/* <DatePicker
-              onChange={this.onChangeDatePicker}
-              showTime
-              // onChange={this.onChange}
-              format="YYYY-MM-DDTHH:mm"
-              onOk={this.onOkDatePicker}
-              renderExtraFooter={() => <h5>Please press OK after choosing</h5>}
-            /> */}
             <Button type="primary" onClick={this.onSearchSchedule}>
               Search
             </Button>
@@ -291,26 +333,32 @@ export default class Home extends Component {
               dataSource={this.state.scheduleItems}
               renderItem={(item) => (
                 <List.Item>
-                  <Card style={{ width: 300 }}>
-                    <p>{item.scheduleStatus}</p>
-                    <p>{item.scheduleDate}</p>
-                    <p>{item.price}</p>
-                    <p>{item.routeDistance}</p>
-                    <p>{item.busStateNumber}</p>
-                    <p>{item.busAvailability}</p>
-                    <p>{item.busAvailableSeatNumber}</p>
-                    <p>{item.busModelName}</p>
-                    <p>{item.busModelSeatNumber}</p>
+                  <Card style={{ width: "100%" }}>
+                    <p>busModelName: {item.busModelName}</p>
+                    <p>busModelSeatNumber: {item.busModelSeatNumber}</p>
+                    <p>busStateNumber: {item.busStateNumber}</p>
+                    <p>routeDistance: {item.routeDistance}</p>
                     <p>
-                      {item.addresses.map((element) => {
-                        return (
-                          <div>
-                            {element.addressName}, {element.sequenceNumber}
-                          </div>
-                        );
-                      })}
+                      scheduleAvailableSeatNumber:
+                       {item.scheduleAvailableSeatNumber}
                     </p>
-                    <Button type="primary" onClick={() => this.onClickCardButton(item)}>Buy</Button>
+                    <p>scheduleDate: {item.scheduleDate}</p>
+                    <p>schedulePrice: {item.schedulePrice}</p>
+                    <p>scheduleStatus: {item.scheduleStatus}</p>
+                    <p>seatNumber: {item.seatNumber}</p>
+
+                    <Divider />
+                    {this.showSteps(item)}
+                    <Link
+                      to={{
+                        pathname: "/ticket",
+                        state: { scheduleTicket: item },
+                      }}
+                    >
+                      <Button renderAs="button" type="primary">
+                        Buy
+                      </Button>
+                    </Link>
                   </Card>
                 </List.Item>
               )}
