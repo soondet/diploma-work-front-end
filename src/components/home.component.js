@@ -17,7 +17,6 @@ import { Link } from "react-router-dom";
 
 import UserService from "../services/user.service";
 import ScheduleService from "../services/schedule.service";
-import StationService from "../services/station.service";
 import CityService from "../services/city.service";
 import AddressService from "../services/address.service";
 
@@ -162,14 +161,19 @@ export default class Home extends Component {
     });
   }
   onChangeAddressFrom(value) {
-    this.setState({
-      filters: {
-        ...this.state.filters,
-        addressFrom: this.state.addressesFrom.filter(
-          (e) => e.addressName == value
-        )[0].id,
+    this.setState(
+      {
+        filters: {
+          ...this.state.filters,
+          addressFrom: this.state.addressesFrom.filter(
+            (e) => e.addressName == value
+          )[0].id,
+        },
       },
-    });
+      () => {
+        this.onSearchSchedule();
+      }
+    );
   }
 
   onChangeCityTo(value) {
@@ -187,14 +191,19 @@ export default class Home extends Component {
     });
   }
   onChangeAddressTo(value) {
-    this.setState({
-      filters: {
-        ...this.state.filters,
-        addressTo: this.state.addressesTo.filter(
-          (e) => e.addressName == value
-        )[0].id,
+    this.setState(
+      {
+        filters: {
+          ...this.state.filters,
+          addressTo: this.state.addressesTo.filter(
+            (e) => e.addressName == value
+          )[0].id,
+        },
       },
-    });
+      () => {
+        this.onSearchSchedule();
+      }
+    );
   }
 
   onSearchSchedule() {
@@ -224,7 +233,6 @@ export default class Home extends Component {
   }
 
   render() {
-    this.state.cities.map((e, index) => console.log(e.cityName + " " + index));
     return (
       <div className="container">
         <header className="jumbotron">
@@ -323,9 +331,6 @@ export default class Home extends Component {
           <Col>
             <List
               pagination={{
-                onChange: (page) => {
-                  console.log(page);
-                },
                 pageSize: 3,
               }}
               size="large"
@@ -340,7 +345,7 @@ export default class Home extends Component {
                     <p>routeDistance: {item.routeDistance}</p>
                     <p>
                       scheduleAvailableSeatNumber:
-                       {item.scheduleAvailableSeatNumber}
+                      {item.scheduleAvailableSeatNumber}
                     </p>
                     <p>scheduleDate: {item.scheduleDate}</p>
                     <p>schedulePrice: {item.schedulePrice}</p>
