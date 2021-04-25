@@ -15,6 +15,9 @@ import "antd/dist/antd.css";
 import moment from "moment";
 import { Link } from "react-router-dom";
 
+import { IconContext } from "react-icons";
+import { FaBusAlt, FaRoute, FaTicketAlt } from "react-icons/fa";
+
 import UserService from "../services/user.service";
 import ScheduleService from "../services/schedule.service";
 import CityService from "../services/city.service";
@@ -137,6 +140,7 @@ export default class Home extends Component {
       },
     });
   }
+
   onChangeDatePicker(value, dateString) {
     this.setState({
       filters: {
@@ -160,6 +164,7 @@ export default class Home extends Component {
       filters: { ...this.state.filters, cityFrom: value },
     });
   }
+
   onChangeAddressFrom(value) {
     this.setState(
       {
@@ -169,10 +174,10 @@ export default class Home extends Component {
             (e) => e.addressName == value
           )[0].id,
         },
-      },
-      () => {
-        this.onSearchSchedule();
       }
+      // () => {
+      //   this.onSearchSchedule();
+      // }
     );
   }
 
@@ -190,6 +195,7 @@ export default class Home extends Component {
       filters: { ...this.state.filters, cityTo: value },
     });
   }
+
   onChangeAddressTo(value) {
     this.setState(
       {
@@ -199,10 +205,10 @@ export default class Home extends Component {
             (e) => e.addressName == value
           )[0].id,
         },
-      },
-      () => {
-        this.onSearchSchedule();
       }
+      // () => {
+      //   this.onSearchSchedule();
+      // }
     );
   }
 
@@ -236,14 +242,14 @@ export default class Home extends Component {
     return (
       <div className="container">
         <header className="jumbotron">
-          <h3>{this.state.content}</h3>
+          <h3 align="center">Select and buy a bus ticket</h3>
 
-          <Row>
-            <Col>
+          <Row justify="center" align="middle" gutter={[16, 16]}>
+            <Col span={7}>
               <Row>
                 <Select
                   showSearch
-                  style={{ width: 200 }}
+                  style={{ width: "100%" }}
                   placeholder="Select From City"
                   optionFilterProp="children"
                   onChange={this.onChangeCityFrom}
@@ -263,7 +269,7 @@ export default class Home extends Component {
               <Row>
                 <Select
                   showSearch
-                  style={{ width: 200 }}
+                  style={{ width: "100%", borderRadius: "30px" }}
                   placeholder="Select From Address"
                   optionFilterProp="children"
                   onChange={this.onChangeAddressFrom}
@@ -281,11 +287,11 @@ export default class Home extends Component {
                 </Select>
               </Row>
             </Col>
-            <Col>
+            <Col span={7}>
               <Row>
                 <Select
                   showSearch
-                  style={{ width: 200 }}
+                  style={{ width: "100%" }}
                   placeholder="Select To City"
                   optionFilterProp="children"
                   onChange={this.onChangeCityTo}
@@ -305,7 +311,7 @@ export default class Home extends Component {
               <Row>
                 <Select
                   showSearch
-                  style={{ width: 200 }}
+                  style={{ width: "100%" }}
                   placeholder="Select To Address"
                   optionFilterProp="children"
                   onChange={this.onChangeAddressTo}
@@ -323,35 +329,82 @@ export default class Home extends Component {
                 </Select>
               </Row>
             </Col>
-            <DatePicker onChange={this.onChangeDatePicker} />
-            <Button type="primary" onClick={this.onSearchSchedule}>
-              Search
-            </Button>
+            <Col span={7}>
+              <DatePicker
+                style={{ width: "100%" }}
+                onChange={this.onChangeDatePicker}
+              />
+            </Col>
+            <Col span={3}>
+              <Button
+                style={{ width: "100%", borderRadius: "10px", height: "100%" }}
+                type="primary"
+                onClick={this.onSearchSchedule}
+              >
+                Search
+              </Button>
+            </Col>
           </Row>
-          <Col>
+          <Col className="schedule">
             <List
+              locale={{ emptyText: "" }}
               pagination={{
                 pageSize: 3,
               }}
               size="large"
-              bordered
               dataSource={this.state.scheduleItems}
               renderItem={(item) => (
                 <List.Item>
-                  <Card style={{ width: "100%" }}>
-                    <p>busModelName: {item.busModelName}</p>
-                    <p>busModelSeatNumber: {item.busModelSeatNumber}</p>
-                    <p>busStateNumber: {item.busStateNumber}</p>
-                    <p>routeDistance: {item.routeDistance}</p>
-                    <p>
-                      scheduleAvailableSeatNumber:
-                      {item.scheduleAvailableSeatNumber}
-                    </p>
-                    <p>scheduleDate: {item.scheduleDate}</p>
-                    <p>schedulePrice: {item.schedulePrice}</p>
-                    <p>scheduleStatus: {item.scheduleStatus}</p>
-                    <p>seatNumber: {item.seatNumber}</p>
-
+                  <Card
+                    style={{
+                      width: "100%",
+                      borderRadius: "10px",
+                      boxShadow: "0 0 5px rgba(0,0,0,0.5)",
+                    }}
+                  >
+                    <Row>
+                      <Col>
+                        <IconContext.Provider
+                          value={{
+                            // color: "blue",
+                            className: "global-class-name",
+                            size: "50px",
+                          }}
+                        >
+                          <div>
+                            <FaTicketAlt />
+                          </div>
+                        </IconContext.Provider>
+                      </Col>
+                      <Col className="schedule-ticket">
+                        <p>
+                          Доступные места:
+                          {item.scheduleAvailableSeatNumber}
+                        </p>
+                        <p>Время выхода: {item.scheduleDate}</p>
+                        <p>Цена: {item.schedulePrice} ТГ.</p>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <IconContext.Provider
+                          value={{
+                            // color: "blue",
+                            className: "global-class-name",
+                            size: "50px",
+                          }}
+                        >
+                          <div>
+                            <FaBusAlt />
+                          </div>
+                        </IconContext.Provider>
+                      </Col>
+                      <Col className="schedule-ticket">
+                        <p>Модель автобуса: {item.busModelName}</p>
+                        <p>Гос. номер автобуса: {item.busStateNumber}</p>
+                        <p>Растояние пути: {item.routeDistance}</p>
+                      </Col>
+                    </Row>
                     <Divider />
                     {this.showSteps(item)}
                     <Link
@@ -360,7 +413,17 @@ export default class Home extends Component {
                         state: { scheduleTicket: item },
                       }}
                     >
-                      <Button renderAs="button" type="primary">
+                      <Button
+                        style={{
+                          width: "20%",
+                          borderRadius: "5px",
+                          // height: "100%",
+                          // position: "absolute",
+                          right: "0px",
+                        }}
+                        renderAs="button"
+                        type="primary"
+                      >
                         Buy
                       </Button>
                     </Link>
@@ -370,7 +433,7 @@ export default class Home extends Component {
             />
           </Col>
 
-          <Index />
+          {/* <Index /> */}
         </header>
       </div>
     );

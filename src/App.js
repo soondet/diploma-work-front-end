@@ -13,6 +13,7 @@ import BoardUser from "./components/board-user.component";
 import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
 import Ticket from "./components/ticket.component";
+import BookingInfo from "./components/bookinginfo.component";
 
 import { logout } from "./actions/auth";
 import { clearMessage } from "./actions/message";
@@ -133,6 +134,7 @@ class App extends Component {
               <Route path="/mod" component={BoardModerator} />
               <Route path="/admin" component={BoardAdmin} />
               <Route path="/ticket" component={Ticket} />
+              <Route path="/bookinginfo" component={BookingInfo} />
             </Switch>
           </div>
         </div>

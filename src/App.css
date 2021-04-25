@@ -30,3 +30,46 @@ label {
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }
+
+.bg-dark {
+  background-color: #252241!important;
+}
+
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  border-radius: 10px !important;
+}
+
+.ant-picker {
+  border-radius: 10px !important;
+}
+
+.jumbotron {
+  border-radius: 10px !important;
+}
+
+.ant-col.schedule {
+  margin-top: 10px
+}
+
+.ant-col.schedule-ticket {
+  margin-left: 20px;
+}
+
+.section-tickets button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  width: 170px;
+  text-align: center;
+}
+
+.section-tickets button.seat:disabled {
+  cursor: not-allowed;
+}
+
+section {
+  border: 4px solid grey;
+  border-radius: 10px !important;
+  padding: 10px
+}
