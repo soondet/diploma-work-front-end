@@ -133,41 +133,45 @@ export default class Ticket extends Component {
         <header className="jumbotron">
           <h3>{this.state.content}</h3>
           <h3 align="center">Ticket Seats</h3>
-          <section style={styleSectionDiv} className="section-tickets">
-            {modelArray.map((e) =>
-              e.seat ? (
-                <button
-                  className="btn btn-primary seat"
-                  disabled={bookedSeats.some((x) => x.seatNo === e.seat.seatNo)}
-                  onClick={() => this.onSeatPlaceButtonClick(e)}
-                >
-                  <IconContext.Provider
-                    value={{
-                      // color: "blue",
-                      className: "global-class-name",
-                      size: "50px",
-                    }}
+          <div>
+            <section style={styleSectionDiv} className="section-tickets">
+              {modelArray.map((e) =>
+                e.seat ? (
+                  <button
+                    className="btn btn-primary seat"
+                    disabled={bookedSeats.some(
+                      (x) => x.seatNo === e.seat.seatNo
+                    )}
+                    onClick={() => this.onSeatPlaceButtonClick(e)}
                   >
-                    <MdAirlineSeatReclineNormal />
-                  </IconContext.Provider>
-                  {bookedSeats.some((x) => x.seatNo === e.seat.seatNo)
-                    ? e.seat.seatNo + " bought"
-                    : e.seat.seatNo}
-                </button>
-              ) : (
-                <button className="btn btn-secondary" disabled></button>
-              )
-            )}
-            <Modal
-              centered
-              visible={modalTicketVisible}
-              onOk={() => this.modalHandleOk()}
-              onCancel={() => this.modalHandleCancel()}
-            >
-              <p>Do you really want to buy?</p>
-            </Modal>
-          </section>
+                    <IconContext.Provider
+                      value={{
+                        // color: "blue",
+                        className: "global-class-name",
+                        size: "50px",
+                      }}
+                    >
+                      <MdAirlineSeatReclineNormal />
+                    </IconContext.Provider>
+                    {bookedSeats.some((x) => x.seatNo === e.seat.seatNo)
+                      ? e.seat.seatNo + " bought"
+                      : e.seat.seatNo}
+                  </button>
+                ) : (
+                  <button className="btn btn-secondary" disabled></button>
+                )
+              )}
+            </section>
+          </div>
         </header>
+        <Modal
+          centered
+          visible={modalTicketVisible}
+          onOk={() => this.modalHandleOk()}
+          onCancel={() => this.modalHandleCancel()}
+        >
+          <p>Do you really want to buy?</p>
+        </Modal>
       </div>
     );
   }

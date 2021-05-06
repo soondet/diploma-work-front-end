@@ -69,7 +69,17 @@ label {
 }
 
 section {
-  border: 4px solid grey;
+  /* border: 4px solid grey; */
   border-radius: 10px !important;
   padding: 10px
+}
+
+.ant-card.ant-card-bordered.addModerator {
+  width: 450px;
+  margin: 0 auto;
+}
+
+.ant-card.ant-card-bordered.addBus {
+  width: 300px;
+  margin: 0 auto;
 }

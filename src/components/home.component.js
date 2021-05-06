@@ -151,7 +151,7 @@ export default class Home extends Component {
   }
 
   onChangeCityFrom(value) {
-    let cityId = this.state.cities.filter((e) => e.cityName == value)[0].id;
+    let cityId = this.state.cities.find((e) => e.cityName == value).id;
     AddressService.getAddressByCity(cityId).then((response) => {
       this.setState({
         addressesFrom: response.data.map((e) => ({
@@ -182,7 +182,7 @@ export default class Home extends Component {
   }
 
   onChangeCityTo(value) {
-    let cityId = this.state.cities.filter((e) => e.cityName == value)[0].id;
+    let cityId = this.state.cities.find((e) => e.cityName == value).id;
     AddressService.getAddressByCity(cityId).then((response) => {
       this.setState({
         addressesTo: response.data.map((e) => ({
