@@ -10,7 +10,7 @@ import Register from "./components/register.component";
 import Home from "./components/home.component";
 import Profile from "./components/profile.component";
 import BoardUser from "./components/board-user.component";
-import BoardModerator from "./components/board-moderator.component";
+import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
 import Ticket from "./components/ticket.component";
 import BookingInfo from "./components/bookinginfo.component";
@@ -18,7 +18,7 @@ import BookingInfo from "./components/bookinginfo.component";
 import { logout } from "./actions/auth";
 import { clearMessage } from "./actions/message";
 
-import { history } from './helpers/history';
+import { history } from "./helpers/history";
 
 class App extends Component {
   constructor(props) {

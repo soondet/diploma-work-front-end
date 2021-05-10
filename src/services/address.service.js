@@ -7,6 +7,10 @@ class AddressService {
   getAddressByCity(cityId) {
     return axios.get(API_URL + `city?cityId=${cityId}`);
   }
+
+  getAddresses() {
+    return axios.get(API_URL + `get`);
+  }
 }
 
 export default new AddressService();

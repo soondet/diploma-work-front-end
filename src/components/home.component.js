@@ -88,12 +88,12 @@ export default class Home extends Component {
   showSteps(item) {
     const { addressesFrom, addressesTo, filters } = this.state;
 
-    let sequenceFrom = item.addresses.filter(
+    let sequenceFrom = item.addresses.find(
       (e) => e.addressId === filters.addressFrom
-    )[0];
-    let sequenceTo = item.addresses.filter(
+    );
+    let sequenceTo = item.addresses.find(
       (e) => e.addressId == filters.addressTo
-    )[0];
+    );
 
     let rangeSequence;
     if (sequenceFrom !== undefined && sequenceTo !== undefined) {
