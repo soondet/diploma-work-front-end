@@ -124,14 +124,9 @@ class AddRoute extends Component {
         index: e.id,
       })),
     });
-    // let address  =   this.props.data.addresses.forEach((e)=>value.includes(e.id))
-    console.log(addresses);
-    console.log(value);
   };
 
   clickAddRoute = () => {
-    let routes = [];
-
     RouteService.createRoute().then(() => {
       RouteService.getRoutes().then((response) => {
         let routes = response.data;
@@ -141,17 +136,12 @@ class AddRoute extends Component {
           SequenceService.createSequence(lastRoute, e, sequenceNumber);
           sequenceNumber++;
         });
-        console.log(response.data);
       });
     });
-
-    console.log(routes[routes.length - 1]);
   };
 
   render() {
     const { dataSource, addressesChoosed } = this.state;
-    console.log(dataSource);
-    console.log(addressesChoosed);
     return (
       <div>
         <Row>

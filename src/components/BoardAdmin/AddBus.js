@@ -86,7 +86,7 @@ class AddBus extends Component {
       choosedBusModel,
       choosedBus.stateNumber,
       values.availability,
-      values.seatNumber
+      choosedBusModel.seatNumber
     ).finally(() => {
       this.changeLoader("onFinishEditing", false);
     });
@@ -104,7 +104,7 @@ class AddBus extends Component {
       choosedBusModel,
       values.stateNumber,
       values.availability,
-      values.seatNumber
+      choosedBusModel.seatNumber,
     ).finally(() => {
       this.changeLoader("onFinishAdding", false);
     });
@@ -238,9 +238,6 @@ class AddBus extends Component {
                 <Form.Item label="Availability" name="availability">
                   <Input placeholder="input availability" />
                 </Form.Item>
-                <Form.Item label="Seat Number" name="seatNumber">
-                  <Input placeholder="input seat number" />
-                </Form.Item>
                 <Form.Item>
                   <Button
                     type="primary"
@@ -368,9 +365,7 @@ class AddBus extends Component {
                 <Form.Item label="Availability" name="availability">
                   <Input placeholder="input availability" />
                 </Form.Item>
-                <Form.Item label="Seat Number" name="seatNumber">
-                  <Input placeholder="input seat number" />
-                </Form.Item>
+
                 <Button
                   type="primary"
                   htmlType="submit"

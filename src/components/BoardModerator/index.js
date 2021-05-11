@@ -8,6 +8,7 @@ import CityService from "../../services/city.service";
 import BusModelService from "../../services/busmodel.service";
 import ParkService from "../../services/park.service";
 import AddressService from "../../services/address.service";
+import RouteService from "../../services/route.service";
 
 import AddRoute from "./AddRoute";
 import AddSchedule from "./AddSchedule";
@@ -24,6 +25,7 @@ class BoardModerator extends Component {
       busModels: [],
       parks: [],
       addresses: [],
+      routes:[]
     };
   }
 
@@ -69,6 +71,12 @@ class BoardModerator extends Component {
         addresses: response.data,
       });
     });
+
+    RouteService.getRoutes().then((response) => {
+      this.setState({
+        routes: response.data,
+      });
+    });
   }
 
   deleteBusById = (id) => {
@@ -92,9 +100,9 @@ class BoardModerator extends Component {
             <Tabs.TabPane tab="Add Schedule" key="2">
               <AddSchedule data={this.state} />
             </Tabs.TabPane>
-            <Tabs.TabPane tab="Tab 3" key="3">
+            {/* <Tabs.TabPane tab="Tab 3" key="3">
               Content of Tab Pane 3
-            </Tabs.TabPane>
+            </Tabs.TabPane> */}
           </Tabs>
         </header>
       </div>

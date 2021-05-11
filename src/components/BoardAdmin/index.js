@@ -83,9 +83,9 @@ class BoardAdmin extends Component {
             <Tabs.TabPane tab="Add/Edit/Delete Bus" key="2">
               <AddBus data={this.state} deleteBusById={this.deleteBusById} />
             </Tabs.TabPane>
-            <Tabs.TabPane tab="Tab 3" key="3">
+            {/* <Tabs.TabPane tab="Tab 3" key="3">
               Content of Tab Pane 3
-            </Tabs.TabPane>
+            </Tabs.TabPane> */}
           </Tabs>
         </header>
       </div>
