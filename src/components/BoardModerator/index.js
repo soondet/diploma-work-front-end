@@ -79,6 +79,14 @@ class BoardModerator extends Component {
     });
   }
 
+  getRoute = () => {
+    RouteService.getRoutes().then((response) => {
+      this.setState({
+        routes: response.data,
+      });
+    });
+  };
+  
   deleteBusById = (id) => {
     this.setState((state) => {
       return {
@@ -95,7 +103,7 @@ class BoardModerator extends Component {
           <h3>{this.state.content}</h3>
           <Tabs defaultActiveKey="1" centered type="card">
             <Tabs.TabPane tab="Add Route" key="1">
-              <AddRoute data={this.state} />
+              <AddRoute data={this.state}  getRoute={this.getRoute}/>
             </Tabs.TabPane>
             <Tabs.TabPane tab="Add Schedule" key="2">
               <AddSchedule data={this.state} />

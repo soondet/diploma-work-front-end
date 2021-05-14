@@ -90,6 +90,7 @@ class AddBus extends Component {
     ).finally(() => {
       this.changeLoader("onFinishEditing", false);
     });
+    this.props.getBus();
   };
 
   onFinishAdding = (values) => {
@@ -104,10 +105,11 @@ class AddBus extends Component {
       choosedBusModel,
       values.stateNumber,
       values.availability,
-      choosedBusModel.seatNumber,
+      choosedBusModel.seatNumber
     ).finally(() => {
       this.changeLoader("onFinishAdding", false);
     });
+    this.props.getBus();
   };
 
   onFinishDeleting = (values) => {

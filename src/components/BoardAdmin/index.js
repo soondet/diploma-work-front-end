@@ -70,6 +70,14 @@ class BoardAdmin extends Component {
     });
   };
 
+  getBus = () => {
+    BusService.getBus().then((response) => {
+      this.setState({
+        buses: response.data,
+      });
+    });
+  };
+
   render() {
     console.log(this.state.content);
     return (
@@ -81,7 +89,11 @@ class BoardAdmin extends Component {
               <AddModerator data={this.state} />
             </Tabs.TabPane>
             <Tabs.TabPane tab="Add/Edit/Delete Bus" key="2">
-              <AddBus data={this.state} deleteBusById={this.deleteBusById} />
+              <AddBus
+                data={this.state}
+                deleteBusById={this.deleteBusById}
+                getBus={this.getBus}
+              />
             </Tabs.TabPane>
             {/* <Tabs.TabPane tab="Tab 3" key="3">
               Content of Tab Pane 3

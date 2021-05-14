@@ -128,6 +128,7 @@ class AddRoute extends Component {
 
   clickAddRoute = () => {
     RouteService.createRoute().then(() => {
+      this.props.getRoute();
       RouteService.getRoutes().then((response) => {
         let routes = response.data;
         let lastRoute = routes[routes.length - 1];
