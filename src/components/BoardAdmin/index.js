@@ -71,7 +71,7 @@ class BoardAdmin extends Component {
   };
 
   getBus = () => {
-    BusService.getBus().then((response) => {
+    return BusService.getBus().then((response) => {
       this.setState({
         buses: response.data,
       });
@@ -79,26 +79,27 @@ class BoardAdmin extends Component {
   };
 
   render() {
-    console.log(this.state.content);
     return (
       <div className="container">
         <header className="jumbotron">
           <h3>{this.state.content}</h3>
-          <Tabs defaultActiveKey="1" centered type="card">
-            <Tabs.TabPane tab="Assign/Reassign Bus" key="1">
-              <AddModerator data={this.state} />
-            </Tabs.TabPane>
-            <Tabs.TabPane tab="Add/Edit/Delete Bus" key="2">
-              <AddBus
-                data={this.state}
-                deleteBusById={this.deleteBusById}
-                getBus={this.getBus}
-              />
-            </Tabs.TabPane>
-            {/* <Tabs.TabPane tab="Tab 3" key="3">
+          <div className="card-container">
+            <Tabs defaultActiveKey="1" centered type="card">
+              <Tabs.TabPane tab="Assign/Reassign Bus" key="1">
+                <AddModerator data={this.state} />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="Add/Edit/Delete Bus" key="2">
+                <AddBus
+                  data={this.state}
+                  deleteBusById={this.deleteBusById}
+                  getBus={this.getBus}
+                />
+              </Tabs.TabPane>
+              {/* <Tabs.TabPane tab="Tab 3" key="3">
               Content of Tab Pane 3
             </Tabs.TabPane> */}
-          </Tabs>
+            </Tabs>
+          </div>
         </header>
       </div>
     );

@@ -14,6 +14,14 @@ import {
 import "antd/dist/antd.css";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import {
+  YMaps,
+  Map,
+  Placemark,
+  Polyline,
+  RouteEditor,
+  Clusterer,
+} from "react-yandex-maps";
 
 import { IconContext } from "react-icons";
 import { FaBusAlt, FaRoute, FaTicketAlt } from "react-icons/fa";
@@ -238,6 +246,31 @@ export default class Home extends Component {
     );
   }
 
+  geocode = (ymaps) => {
+    // console.log(ymaps.geolocation.get());
+    // console.log(this.props);
+    // console.log(ymaps);
+    // console.log(
+    //   ymaps.coordSystem.geo.getDistance(
+    //     [55.654884, 37.527034],
+    //     [55.767305, 37.9761]
+    //   )
+    // );
+    // console.log(ymaps);
+    // console.log(
+    //   ymaps.coordSystem.geo.getDistance(
+    //     (43.240966, 76.93676),
+    //     (43.243501, 76.933356)
+    //   )
+    // );
+    // ymaps.geocode("Мытищи").then((result) =>
+    //   this.setState({
+    //     loh: result.geoObjects.get(0).geometry.getCoordinates(),
+    //   })
+    // );
+  };
+
+
   render() {
     return (
       <div className="container">
@@ -363,46 +396,124 @@ export default class Home extends Component {
                     }}
                   >
                     <Row>
-                      <Col>
-                        <IconContext.Provider
-                          value={{
-                            // color: "blue",
-                            className: "global-class-name",
-                            size: "50px",
-                          }}
+                      <Col span={12}>
+                        <Row>
+                          <Col>
+                            <IconContext.Provider
+                              value={{
+                                // color: "blue",
+                                className: "global-class-name",
+                                size: "50px",
+                              }}
+                            >
+                              <div>
+                                <FaTicketAlt />
+                              </div>
+                            </IconContext.Provider>
+                          </Col>
+                          <Col className="schedule-ticket">
+                            <p>
+                              <span style={{ fontWeight: "600" }}>
+                                Доступные места:
+                              </span>
+                              {item.scheduleAvailableSeatNumber}
+                            </p>
+                            <p>
+                              <span style={{ fontWeight: "600" }}>
+                                Время выхода:
+                              </span>
+                              {item.scheduleDate}
+                            </p>
+                            <p>
+                              <span style={{ fontWeight: "600" }}>Цена:</span>
+                              {item.schedulePrice} ТГ.
+                            </p>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col>
+                            <IconContext.Provider
+                              value={{
+                                // color: "blue",
+                                className: "global-class-name",
+                                size: "50px",
+                              }}
+                            >
+                              <div>
+                                <FaBusAlt />
+                              </div>
+                            </IconContext.Provider>
+                          </Col>
+                          <Col className="schedule-ticket">
+                            <p>
+                              <span style={{ fontWeight: "600" }}>
+                                Модель автобуса:
+                              </span>
+                              {item.busModelName}
+                            </p>
+                            <p>
+                              <span style={{ fontWeight: "600" }}>
+                                Гос. номер автобуса:
+                              </span>
+                              {item.busStateNumber}
+                            </p>
+                            <p>
+                              <span style={{ fontWeight: "600" }}>
+                                Растояние пути:
+                              </span>
+                              {item.routeDistance}
+                            </p>
+                          </Col>
+                        </Row>
+                      </Col>
+                      <Col span={12}>
+                        <YMaps
+                          onApiAvaliable={(ymaps) => this.onApiAvaliable(ymaps)}
                         >
-                          <div>
-                            <FaTicketAlt />
-                          </div>
-                        </IconContext.Provider>
-                      </Col>
-                      <Col className="schedule-ticket">
-                        <p>
-                          Доступные места:
-                          {item.scheduleAvailableSeatNumber}
-                        </p>
-                        <p>Время выхода: {item.scheduleDate}</p>
-                        <p>Цена: {item.schedulePrice} ТГ.</p>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col>
-                        <IconContext.Provider
-                          value={{
-                            // color: "blue",
-                            className: "global-class-name",
-                            size: "50px",
-                          }}
-                        >
-                          <div>
-                            <FaBusAlt />
-                          </div>
-                        </IconContext.Provider>
-                      </Col>
-                      <Col className="schedule-ticket">
-                        <p>Модель автобуса: {item.busModelName}</p>
-                        <p>Гос. номер автобуса: {item.busStateNumber}</p>
-                        <p>Растояние пути: {item.routeDistance}</p>
+                          <Map
+                            onLoad={(ymaps) => this.geocode(ymaps)}
+                            defaultState={{
+                              center: [43.237161, 76.945626],
+                              zoom: 10,
+                              behaviors: ["default", "scrollZoom"],
+                            }}
+                            modules={[
+                              "geoObject.addon.balloon",
+                              "geoObject.addon.hint",
+                              "geolocation",
+                              "geocode",
+                            ]}
+                          >
+                            {item.addresses.map((e, idx) => (
+                              <Placemark
+                                key={idx}
+                                geometry={[
+                                  e.addressCoordinateX,
+                                  e.addressCoordinateY,
+                                ]}
+                                properties={{
+                                  balloonContentBody: e.addressName,
+                                  hintContent: e.addressName,
+                                }}
+                              />
+                            ))}
+
+                            <Polyline
+                              geometry={item.addresses.map((e) => {
+                                return [
+                                  e.addressCoordinateX,
+                                  e.addressCoordinateY,
+                                ];
+                              })}
+                              options={{
+                                balloonCloseButton: false,
+                                strokeColor: "#000000",
+                                strokeWidth: 4,
+                                strokeOpacity: 1,
+                              }}
+                            />
+                          </Map>
+                        </YMaps>
                       </Col>
                     </Row>
                     <Divider />

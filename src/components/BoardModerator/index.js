@@ -25,7 +25,7 @@ class BoardModerator extends Component {
       busModels: [],
       parks: [],
       addresses: [],
-      routes:[]
+      routes: [],
     };
   }
 
@@ -80,13 +80,13 @@ class BoardModerator extends Component {
   }
 
   getRoute = () => {
-    RouteService.getRoutes().then((response) => {
+    return RouteService.getRoutes().then((response) => {
       this.setState({
         routes: response.data,
       });
     });
   };
-  
+
   deleteBusById = (id) => {
     this.setState((state) => {
       return {
@@ -101,17 +101,19 @@ class BoardModerator extends Component {
       <div className="container">
         <header className="jumbotron">
           <h3>{this.state.content}</h3>
-          <Tabs defaultActiveKey="1" centered type="card">
-            <Tabs.TabPane tab="Add Route" key="1">
-              <AddRoute data={this.state}  getRoute={this.getRoute}/>
-            </Tabs.TabPane>
-            <Tabs.TabPane tab="Add Schedule" key="2">
-              <AddSchedule data={this.state} />
-            </Tabs.TabPane>
-            {/* <Tabs.TabPane tab="Tab 3" key="3">
+          <div className="card-container">
+            <Tabs defaultActiveKey="1" centered type="card">
+              <Tabs.TabPane tab="Add Route" key="1">
+                <AddRoute data={this.state} getRoute={this.getRoute} />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="Add Schedule" key="2">
+                <AddSchedule data={this.state} />
+              </Tabs.TabPane>
+              {/* <Tabs.TabPane tab="Tab 3" key="3">
               Content of Tab Pane 3
             </Tabs.TabPane> */}
-          </Tabs>
+            </Tabs>
+          </div>
         </header>
       </div>
     );

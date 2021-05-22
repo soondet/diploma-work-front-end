@@ -61,8 +61,10 @@ class AddBus extends Component {
     });
   };
 
-  onChangeStateNumberEdit = (value) => {
+  onChangeStateNumberEdit = async (value) => {
+    await this.props.getBus();
     let bus = this.props.data.buses.find((e) => e.id == value);
+
     this.formEdit.current.setFieldsValue({
       busModel: bus.busModel.modelName,
       availability: bus.availability,
@@ -152,6 +154,7 @@ class AddBus extends Component {
               <h5
                 style={{
                   textAlign: "center",
+                  fontWeight: "600",
                 }}
               >
                 Add Bus
@@ -258,6 +261,7 @@ class AddBus extends Component {
               <h5
                 style={{
                   textAlign: "center",
+                  fontWeight: "600",
                 }}
               >
                 Edit Bus
@@ -385,6 +389,7 @@ class AddBus extends Component {
               <h5
                 style={{
                   textAlign: "center",
+                  fontWeight: "600",
                 }}
               >
                 Delete Bus

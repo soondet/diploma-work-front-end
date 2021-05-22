@@ -54,25 +54,34 @@ export default class BookingInfo extends Component {
             <h3>{this.state.content}</h3>
             <h3 align="center">Detailed Booked Ticket Info:</h3>
             <h4 align="center">Booking Info:</h4>
-            Ticket №: {bookingInfo.id}
+            <span style={{ fontWeight: "650" }}>Ticket №: </span>
+            {bookingInfo.id}
             <br></br>
-            Booking Time: {bookingInfo.bookingTime}
+            <span style={{ fontWeight: "650" }}>Booking Time: </span>
+            {bookingInfo.bookingTime}
             <br></br>
-            Seat No: {bookingInfo.seatNo}
+            <span style={{ fontWeight: "650" }}>Seat No: </span>
+            {bookingInfo.seatNo}
             <br></br>
             <h4 align="center">Schedule Info:</h4>
-            Leaving Date: {bookingInfo.schedule.date}
+            <span style={{ fontWeight: "650" }}>Leaving Date: </span>
+            {bookingInfo.schedule.date}
             <br></br>
-            Price: {bookingInfo.schedule.price}
+            <span style={{ fontWeight: "650" }}>Price: </span>
+            {bookingInfo.schedule.price}
             <br></br>
             <h4 align="center">Bus Info:</h4>
-            Availability: {bookingInfo.schedule.bus.availability}
+            <span style={{ fontWeight: "650" }}>Availability: </span>
+            {bookingInfo.schedule.bus.availability}
             <br></br>
-            State Number: {bookingInfo.schedule.bus.stateNumber}
+            <span style={{ fontWeight: "650" }}>State Number: </span>
+            {bookingInfo.schedule.bus.stateNumber}
             <h4 align="center">Bus Model Info:</h4>
-            Model Name: {bookingInfo.schedule.bus.busModel.modelName}
+            <span style={{ fontWeight: "650" }}> Model Name: </span>
+            {bookingInfo.schedule.bus.busModel.modelName}
             <br></br>
-            Seat Number: {bookingInfo.schedule.bus.busModel.seatNumber}
+            <span style={{ fontWeight: "650" }}>Seat Number: </span>
+            {bookingInfo.schedule.bus.busModel.seatNumber}
             <br></br>
             <Button
               type="primary"

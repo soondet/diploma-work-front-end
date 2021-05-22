@@ -24,6 +24,7 @@
     "react-scripts": "3.4.3",
     "react-sortable-hoc": "^2.0.0",
     "react-validation": "^3.0.7",
+    "react-yandex-maps": "^4.6.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "stripe": "^8.139.0",

@@ -184,7 +184,7 @@ class AddRoute extends Component {
               <Select
                 mode="multiple"
                 showSearch
-                style={{ width: "100%" }}
+                style={{ width: "100%", marginBottom: "5px" }}
                 placeholder="Select Addresses"
                 optionFilterProp="children"
                 onChange={this.onChangeAddresses}

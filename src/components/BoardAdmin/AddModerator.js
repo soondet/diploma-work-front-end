@@ -85,6 +85,7 @@ class AddModerator extends Component {
               <h5
                 style={{
                   textAlign: "center",
+                  fontWeight: "600",
                 }}
               >
                 Assign Bus To User and Give him Role Moderator:
@@ -153,6 +154,7 @@ class AddModerator extends Component {
               <h5
                 style={{
                   textAlign: "center",
+                  fontWeight: "600",
                 }}
               >
                 Reassign User from bus and delete Moderator Role
