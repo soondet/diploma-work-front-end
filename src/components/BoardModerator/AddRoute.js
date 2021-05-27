@@ -18,6 +18,7 @@ import {
 } from "react-sortable-hoc";
 import { MenuOutlined } from "@ant-design/icons";
 import arrayMove from "array-move";
+import { PlusOutlined } from "@ant-design/icons";
 
 import AuthService from "../../services/auth.service";
 import ParkService from "../../services/park.service";
@@ -137,6 +138,12 @@ class AddRoute extends Component {
           SequenceService.createSequence(lastRoute, e, sequenceNumber);
           sequenceNumber++;
         });
+        message.open({
+          type: "success",
+          duration: 2,
+          content: "Route succesfully added",
+        });
+
       });
     });
   };
@@ -145,8 +152,8 @@ class AddRoute extends Component {
     const { dataSource, addressesChoosed } = this.state;
     return (
       <div>
-        <Row>
-          <Col span={16}>
+        <Row gutter={[16, 16]} style={{ display: "flex", alignItems: "" }}>
+          <Col span={16} style={{ borderRight: "2px solid #e9ecef" }}>
             <Table
               pagination={false}
               dataSource={dataSource}
@@ -179,8 +186,6 @@ class AddRoute extends Component {
                   </Select.Option>
                 ))}
               </Select>
-            </Row>
-            <Row>
               <Select
                 mode="multiple"
                 showSearch
@@ -199,14 +204,20 @@ class AddRoute extends Component {
                   </Select.Option>
                 ))}
               </Select>
+              <Button
+                type="primary"
+                onClick={() => this.clickAddRoute()}
+                icon={<PlusOutlined />}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  margin: "0 auto",
+                }}
+              >
+                Add
+              </Button>
             </Row>
-            <Button
-              style={{ display: "block", margin: "0 auto" }}
-              type="primary"
-              onClick={() => this.clickAddRoute()}
-            >
-              Add Route
-            </Button>
           </Col>
         </Row>
       </div>

@@ -59,7 +59,7 @@ class AddModerator extends Component {
         choosedUser.roles,
         null
       );
-      message.success("ReAssigned successfully");
+      message.success("Reassigned successfully");
     } else {
       message.warning("This user dont have role moderator");
     }
@@ -141,7 +141,7 @@ class AddModerator extends Component {
                   </Select>
                 </Form.Item>
 
-                <Form.Item {...tailLayout}>
+                <Form.Item style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
                   <Button type="primary" htmlType="submit">
                     Submit
                   </Button>
@@ -190,7 +190,7 @@ class AddModerator extends Component {
                     ))}
                   </Select>
                 </Form.Item>
-                <Form.Item {...tailLayout}>
+                <Form.Item style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
                   <Button type="primary" htmlType="submit">
                     Submit
                   </Button>

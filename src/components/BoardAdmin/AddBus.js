@@ -93,6 +93,7 @@ class AddBus extends Component {
       this.changeLoader("onFinishEditing", false);
     });
     this.props.getBus();
+    message.success("Success");
   };
 
   onFinishAdding = (values) => {
@@ -123,6 +124,7 @@ class AddBus extends Component {
     BusService.deleteById(values.stateNumber).finally(() => {
       this.changeLoader("deleteById", false);
     });
+    message.success("Success");
   };
 
   onFinishFailedAdding = (errorInfo) => {

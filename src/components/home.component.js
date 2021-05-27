@@ -11,6 +11,7 @@ import {
   Steps,
   Divider,
 } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import moment from "moment";
 import { Link } from "react-router-dom";
@@ -150,6 +151,7 @@ export default class Home extends Component {
   }
 
   onChangeDatePicker(value, dateString) {
+    console.log("gggg");
     this.setState({
       filters: {
         ...this.state.filters,
@@ -270,16 +272,15 @@ export default class Home extends Component {
     // );
   };
 
-
   render() {
     return (
       <div className="container">
-        <header className="jumbotron">
+        <header className="jumbotron home">
           <h3 align="center">Select and buy a bus ticket</h3>
 
-          <Row justify="center" align="middle" gutter={[16, 16]}>
-            <Col span={7}>
-              <Row>
+          <div className="bg-container">
+            <Row justify="center" align="middle" gutter={[16, 16]}>
+              <Col span={7}>
                 <Select
                   showSearch
                   style={{ width: "100%" }}
@@ -298,8 +299,6 @@ export default class Home extends Component {
                     </Select.Option>
                   ))}
                 </Select>
-              </Row>
-              <Row>
                 <Select
                   showSearch
                   style={{ width: "100%", borderRadius: "30px" }}
@@ -318,10 +317,8 @@ export default class Home extends Component {
                     </Select.Option>
                   ))}
                 </Select>
-              </Row>
-            </Col>
-            <Col span={7}>
-              <Row>
+              </Col>
+              <Col span={7}>
                 <Select
                   showSearch
                   style={{ width: "100%" }}
@@ -340,8 +337,6 @@ export default class Home extends Component {
                     </Select.Option>
                   ))}
                 </Select>
-              </Row>
-              <Row>
                 <Select
                   showSearch
                   style={{ width: "100%" }}
@@ -360,24 +355,40 @@ export default class Home extends Component {
                     </Select.Option>
                   ))}
                 </Select>
-              </Row>
-            </Col>
-            <Col span={7}>
-              <DatePicker
-                style={{ width: "100%" }}
-                onChange={this.onChangeDatePicker}
-              />
-            </Col>
-            <Col span={3}>
-              <Button
-                style={{ width: "100%", borderRadius: "10px", height: "100%" }}
-                type="primary"
-                onClick={this.onSearchSchedule}
-              >
-                Search
-              </Button>
-            </Col>
-          </Row>
+              </Col>
+            </Row>
+            <br />
+            <Row justify="center" align="middle" gutter={[16, 16]}>
+              <Col span={7}>
+                <DatePicker
+                  style={{ width: "100%" }}
+                  onChange={this.onChangeDatePicker}
+                  onPanelChange={(a) => {
+                    console.log(a);
+                  }}
+                />
+              </Col>
+              <Col span={7}>
+                <Button
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "row-reverse",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    padding: "4px 8px 4px 2px",
+                  }}
+                  type="primary"
+                  onClick={this.onSearchSchedule}
+                  icon={<SearchOutlined />}
+                >
+                  Search
+                </Button>
+              </Col>
+            </Row>
+          </div>
+
           <Col className="schedule">
             <List
               locale={{ emptyText: "" }}
@@ -391,14 +402,14 @@ export default class Home extends Component {
                   <Card
                     style={{
                       width: "100%",
-                      borderRadius: "10px",
-                      boxShadow: "0 0 5px rgba(0,0,0,0.5)",
+                      // borderRadius: "10px",
+                      boxShadow: "2px 1px 5px #dadada",
                     }}
                   >
                     <Row>
                       <Col span={12}>
                         <Row>
-                          <Col>
+                          {/* <Col>
                             <IconContext.Provider
                               value={{
                                 // color: "blue",
@@ -410,28 +421,28 @@ export default class Home extends Component {
                                 <FaTicketAlt />
                               </div>
                             </IconContext.Provider>
-                          </Col>
+                          </Col> */}
                           <Col className="schedule-ticket">
-                            <p>
+                            <p style={{ marginBottom: 3 }}>
                               <span style={{ fontWeight: "600" }}>
-                                Доступные места:
+                                Available places:
                               </span>
                               {item.scheduleAvailableSeatNumber}
                             </p>
-                            <p>
+                            <p style={{ marginBottom: 3 }}>
                               <span style={{ fontWeight: "600" }}>
-                                Время выхода:
+                                Exit time:
                               </span>
                               {item.scheduleDate}
                             </p>
-                            <p>
-                              <span style={{ fontWeight: "600" }}>Цена:</span>
-                              {item.schedulePrice} ТГ.
+                            <p style={{ marginBottom: 3 }}>
+                              <span style={{ fontWeight: "600" }}>Price:</span>
+                              {item.schedulePrice} TG.
                             </p>
                           </Col>
                         </Row>
                         <Row>
-                          <Col>
+                          {/* <Col>
                             <IconContext.Provider
                               value={{
                                 // color: "blue",
@@ -443,23 +454,24 @@ export default class Home extends Component {
                                 <FaBusAlt />
                               </div>
                             </IconContext.Provider>
-                          </Col>
+                          </Col> */}
+                          <br />
                           <Col className="schedule-ticket">
-                            <p>
+                            <p style={{ marginBottom: 3, marginTop: 10 }}>
                               <span style={{ fontWeight: "600" }}>
-                                Модель автобуса:
+                                Bus model:
                               </span>
                               {item.busModelName}
                             </p>
-                            <p>
+                            <p style={{ marginBottom: 3 }}>
                               <span style={{ fontWeight: "600" }}>
-                                Гос. номер автобуса:
+                                State bus number:
                               </span>
                               {item.busStateNumber}
                             </p>
-                            <p>
+                            <p style={{ marginBottom: 3 }}>
                               <span style={{ fontWeight: "600" }}>
-                                Растояние пути:
+                                Path distance:
                               </span>
                               {item.routeDistance}
                             </p>

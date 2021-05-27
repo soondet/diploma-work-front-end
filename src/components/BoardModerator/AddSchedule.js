@@ -23,6 +23,7 @@ import {
 import { MenuOutlined } from "@ant-design/icons";
 import arrayMove from "array-move";
 import moment from "moment";
+import { PlusOutlined } from "@ant-design/icons";
 
 import AuthService from "../../services/auth.service";
 import ParkService from "../../services/park.service";
@@ -134,6 +135,7 @@ class AddSchedule extends Component {
         values.seats.forEach((e) => {
           BookedSeatService.createBookedSeat(response.data[0], e);
         });
+        message.success("Success");
       });
     });
   };
@@ -212,8 +214,7 @@ class AddSchedule extends Component {
                   <Card
                     style={{
                       width: "100%",
-                      borderRadius: "10px",
-                      boxShadow: "0 0 5px rgba(0,0,0,0.5)",
+                      boxShadow: "2px 1px 5px #dadada",
                     }}
                   >
                     <Row>
@@ -223,24 +224,26 @@ class AddSchedule extends Component {
                           {item.route.id}
                         </p>
                         <p>
-                          <span style={{ fontWeight: "650" }}>Адреса: </span>
+                          <span style={{ fontWeight: "650" }}>Addresses: </span>
                           {item.addresses.map((e) => e.address.addressName) +
                             " "}
                         </p>
                       </Col>
                     </Row>
-                    <Divider />
+                    {/* <Divider /> */}
+                    <br />
                     <Button
                       style={{
                         width: "20%",
-                        borderRadius: "5px",
                         // height: "100%",
                         // position: "absolute",
-                        right: "0px",
+                        right: "-20px",
                       }}
                       renderAs="button"
                       type="primary"
                       onClick={() => this.showModal(item)}
+                      icon={<PlusOutlined />}
+                      style={{ display: "flex", alignItems: "center" }}
                     >
                       Add Schedule
                     </Button>

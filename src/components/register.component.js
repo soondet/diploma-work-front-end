@@ -6,6 +6,7 @@ import { isEmail } from "validator";
 
 import { connect } from "react-redux";
 import { register } from "../actions/auth";
+import profileImg from "../img/profile.png";
 
 const required = (value) => {
   if (!value) {
@@ -115,7 +116,7 @@ class Register extends Component {
       <div className="col-md-12">
         <div className="card card-container">
           <img
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+            src={profileImg}
             alt="profile-img"
             className="profile-img-card"
           />

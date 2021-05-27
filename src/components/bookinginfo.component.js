@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./ticket/bus.seats.scss";
 import { Button, Modal, message, Card } from "antd";
 
 import PdfService, { API_URL } from "../services/pdf.service";
@@ -47,8 +46,8 @@ export default class BookingInfo extends Component {
           <Card
             style={{
               width: "100%",
-              borderRadius: "10px",
-              boxShadow: "0 0 5px rgba(0,0,0,0.5)",
+              // borderRadius: "10px",
+              boxShadow: "2px 1px 5px #dadada",
             }}
           >
             <h3>{this.state.content}</h3>
@@ -82,15 +81,19 @@ export default class BookingInfo extends Component {
             <br></br>
             <span style={{ fontWeight: "650" }}>Seat Number: </span>
             {bookingInfo.schedule.bus.busModel.seatNumber}
-            <br></br>
+
+            <br />
+          
             <Button
               type="primary"
               onClick={this.sendPdf}
               style={{
                 width: "20%",
                 margin: "5px",
+                marginTop: 10,
+                marginLeft: 0,
 
-                borderRadius: "5px",
+                // borderRadius: "5px",
                 // height: "100%",
                 // position: "absolute",
                 right: "0px",
@@ -101,7 +104,7 @@ export default class BookingInfo extends Component {
             <Button
               style={{
                 width: "20%",
-                borderRadius: "5px",
+                // borderRadius: "5px",
                 margin: "5px",
                 // height: "100%",
                 // position: "absolute",

@@ -22,7 +22,7 @@ label {
 }
 
 .profile-img-card {
-  width: 96px;
+  width: 125px;
   height: 96px;
   margin: 0 auto 10px;
   display: block;
@@ -36,15 +36,16 @@ label {
 }
 
 .ant-select:not(.ant-select-customize-input) .ant-select-selector {
-  border-radius: 10px !important;
+  /* border-radius: 10px !important; */
 }
 
 .ant-picker {
-  border-radius: 10px !important;
+  /* border-radius: 10px !important; */
 }
 
-.jumbotron {
-  border-radius: 10px !important;
+.jumbotron.home {
+  /* border-radius: 10px !important; */
+  background: none !important;
 }
 
 .ant-col.schedule {
@@ -52,7 +53,7 @@ label {
 }
 
 .ant-col.schedule-ticket {
-  margin-left: 20px;
+  /* margin-left: 20px; */
 }
 
 .section-tickets button {
@@ -146,4 +147,27 @@ label {
 [data-theme='dark'] .card-container>.ant-tabs-card .ant-tabs-tab-active {
   background: #141414;
   border-color: #141414;
+}
+
+.ant-message .anticon {
+  top: -3px !important;
+}
+
+.bg-container {
+  padding: 50px 0;
+  position: relative;
+  z-index: 99;
+}
+
+.bg-container::after {
+  display: block;
+  content: "";
+  position: absolute;
+  background: url("./img/bg-1.jpg") no-repeat center / 460px;
+  opacity: 0.6;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
 }

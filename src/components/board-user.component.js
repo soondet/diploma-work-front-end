@@ -71,9 +71,8 @@ export default class BoardUser extends Component {
                   <Card
                     style={{
                       width: "100%",
-                      borderRadius: "10px",
-                      boxShadow: "0 0 5px rgba(0,0,0,0.5)",
-                    }}
+                      // borderRadius: "10px",
+                      boxShadow: "2px 1px 5px #dadada",                    }}
                   >
                     <Descriptions
                       title={"Ticket №" + item.id}

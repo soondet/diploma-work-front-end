@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from 'react-router-dom';
+import { Redirect } from "react-router-dom";
 
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
@@ -7,7 +7,7 @@ import CheckButton from "react-validation/build/button";
 
 import { connect } from "react-redux";
 import { login } from "../actions/auth";
-
+import profileImg from "../img/profile.png";
 const required = (value) => {
   if (!value) {
     return (
@@ -63,7 +63,7 @@ class Login extends Component {
         })
         .catch(() => {
           this.setState({
-            loading: false
+            loading: false,
           });
         });
     } else {
@@ -84,7 +84,7 @@ class Login extends Component {
       <div className="col-md-12">
         <div className="card card-container">
           <img
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+            src={profileImg}
             alt="profile-img"
             className="profile-img-card"
           />
@@ -156,7 +156,7 @@ function mapStateToProps(state) {
   const { message } = state.message;
   return {
     isLoggedIn,
-    message
+    message,
   };
 }
 

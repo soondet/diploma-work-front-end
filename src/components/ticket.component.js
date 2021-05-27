@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./ticket/bus.seats.scss";
 import { Button, Modal, message } from "antd";
 import UserService from "../services/user.service";
 import SeatPlaceService from "../services/seatplace.service";
