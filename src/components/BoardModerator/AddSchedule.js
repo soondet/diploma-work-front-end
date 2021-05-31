@@ -118,6 +118,7 @@ class AddSchedule extends Component {
   };
 
   onFinishAddingSchedule = (values) => {
+    if (typeof values.seats === "undefined") values.seats = [];
     ScheduleService.createSchedule(
       this.state.choosedRoute,
       JSON.parse(localStorage.getItem("user")).bus,
@@ -269,7 +270,7 @@ class AddSchedule extends Component {
             onFinishFailed={this.onFinishAddingFailed}
             layout="vertical"
           >
-            <Form.Item label="Seats" name="seats" rules={[{ required: true }]}>
+            <Form.Item label="Seats" name="seats">
               <Select
                 mode="multiple"
                 showSearch

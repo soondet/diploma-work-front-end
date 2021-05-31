@@ -86,7 +86,7 @@ class BoardAdmin extends Component {
           <div className="card-container">
             <Tabs defaultActiveKey="1" centered type="card">
               <Tabs.TabPane tab="Assign/Reassign Bus" key="1">
-                <AddModerator data={this.state} />
+                <AddModerator data={this.state} getBus={this.getBus} />
               </Tabs.TabPane>
               <Tabs.TabPane tab="Add/Edit/Delete Bus" key="2">
                 <AddBus

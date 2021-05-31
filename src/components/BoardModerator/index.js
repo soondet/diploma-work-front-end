@@ -96,7 +96,6 @@ class BoardModerator extends Component {
   };
 
   render() {
-    console.log(this.state.content);
     return (
       <div className="container">
         <header className="jumbotron">

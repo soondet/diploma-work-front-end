@@ -128,13 +128,30 @@ class AddRoute extends Component {
   };
 
   clickAddRoute = () => {
-    RouteService.createRoute().then(() => {
+    const { addressesChoosed } = this.state;
+    let haversine_km = 0;
+
+    for (var i = 0; i < addressesChoosed.length - 1; i++) {
+      let haversine = require("haversine-distance");
+      let point1 = {
+        lat: addressesChoosed[i].coordinateY,
+        lng: addressesChoosed[i].coordinateX,
+      };
+      let point2 = {
+        lat: addressesChoosed[i + 1].coordinateY,
+        lng: addressesChoosed[i + 1].coordinateX,
+      };
+      let haversine_m = haversine(point1, point2);
+      haversine_km = haversine_km + haversine_m / 1000;
+    }
+
+    RouteService.createRoute(haversine_km).then(() => {
       this.props.getRoute();
       RouteService.getRoutes().then((response) => {
         let routes = response.data;
         let lastRoute = routes[routes.length - 1];
         let sequenceNumber = 1;
-        this.state.addressesChoosed.forEach((e) => {
+        addressesChoosed.forEach((e) => {
           SequenceService.createSequence(lastRoute, e, sequenceNumber);
           sequenceNumber++;
         });
@@ -143,7 +160,6 @@ class AddRoute extends Component {
           duration: 2,
           content: "Route succesfully added",
         });
-
       });
     });
   };

@@ -113,6 +113,8 @@ class AddBus extends Component {
       this.changeLoader("onFinishAdding", false);
     });
     this.props.getBus();
+    message.success("Success");
+
   };
 
   onFinishDeleting = (values) => {

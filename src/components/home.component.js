@@ -151,7 +151,6 @@ export default class Home extends Component {
   }
 
   onChangeDatePicker(value, dateString) {
-    console.log("gggg");
     this.setState({
       filters: {
         ...this.state.filters,
@@ -248,29 +247,6 @@ export default class Home extends Component {
     );
   }
 
-  geocode = (ymaps) => {
-    // console.log(ymaps.geolocation.get());
-    // console.log(this.props);
-    // console.log(ymaps);
-    // console.log(
-    //   ymaps.coordSystem.geo.getDistance(
-    //     [55.654884, 37.527034],
-    //     [55.767305, 37.9761]
-    //   )
-    // );
-    // console.log(ymaps);
-    // console.log(
-    //   ymaps.coordSystem.geo.getDistance(
-    //     (43.240966, 76.93676),
-    //     (43.243501, 76.933356)
-    //   )
-    // );
-    // ymaps.geocode("Мытищи").then((result) =>
-    //   this.setState({
-    //     loh: result.geoObjects.get(0).geometry.getCoordinates(),
-    //   })
-    // );
-  };
 
   render() {
     return (
@@ -483,7 +459,7 @@ export default class Home extends Component {
                           onApiAvaliable={(ymaps) => this.onApiAvaliable(ymaps)}
                         >
                           <Map
-                            onLoad={(ymaps) => this.geocode(ymaps)}
+                            // onLoad={(ymaps) => this.geocode(ymaps)}
                             defaultState={{
                               center: [43.237161, 76.945626],
                               zoom: 10,

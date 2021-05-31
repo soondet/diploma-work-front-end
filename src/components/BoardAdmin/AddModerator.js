@@ -12,7 +12,9 @@ class AddModerator extends Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.getBus();
+  }
 
   onFinish = (values) => {
     const { roleModerator } = this.state;
@@ -141,7 +143,13 @@ class AddModerator extends Component {
                   </Select>
                 </Form.Item>
 
-                <Form.Item style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+                <Form.Item
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <Button type="primary" htmlType="submit">
                     Submit
                   </Button>
@@ -190,7 +198,13 @@ class AddModerator extends Component {
                     ))}
                   </Select>
                 </Form.Item>
-                <Form.Item style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+                <Form.Item
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <Button type="primary" htmlType="submit">
                     Submit
                   </Button>

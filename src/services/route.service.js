@@ -4,9 +4,9 @@ import authHeader from "./auth-header";
 const API_URL = "http://195.2.67.225:8080/api/route/";
 
 class RouteService {
-  createRoute() {
+  createRoute(haversine_km) {
     return axios.post(API_URL + "create", {
-      distance: 5000,
+      distance: haversine_km,
       price: 3000,
     });
   }
